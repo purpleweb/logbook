@@ -16,14 +16,13 @@ type Log = {
 
 const fetchLogs = async () => {
   const response = await fetch('http://127.0.0.1:8000/interventions/');
-  console.log("req")
   const myJson = await response.json();
 
   const logs: Log[] = []
   for (const obj of myJson) {
     const operations: string = obj.operations.reduce((res: string, ope: Operation) => {
         const sep = res ? ', ' : '';
-        return res + sep + ope.title
+        return `${res}${sep}${ope.title}`
       }, "");
     const log: Log = {
       id: obj.id,
