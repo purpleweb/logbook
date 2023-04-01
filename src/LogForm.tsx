@@ -15,9 +15,10 @@ type Inputs = {
 
 export function LogForm() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
 
-  console.log(errors)
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data)
+  }
 
   const navigate = useNavigate();
   const title: string = "New Entry";
@@ -43,8 +44,14 @@ export function LogForm() {
               Date
             </label>
             <div className="control">
-              <input {...register("date")} className="input" type="text" placeholder="" />
+              <input
+                {...register("date", {required: "Date is required", pattern: {value: /[0-9]{2}\/[0-9]{2}\/[0-9]{4}/, message: "Date is not valid, format = dd/mm/yyyy" }})}
+                className={errors.date ? "input is-danger" : "input"}
+                type="text"
+                placeholder="05/12/2020"
+              />
             </div>
+            <p className="help is-danger">{errors.date?.message}</p>
           </div>
           <div className="field">
             <label htmlFor="" className="label">
@@ -52,7 +59,7 @@ export function LogForm() {
             </label>
             <div className="control">
               <input
-                {...register("km", { required: "This field is mandatory", pattern: {value: /[0-9]+/, message: "Valid number required"} })}
+                {...register("km", { required: "This field is mandatory", pattern: {value: /[0-9]+/, message: "Not a valid number"} })}
                 className={errors.km ? "input is-danger" : "input"}
                 type="text"
                 placeholder="125 234"

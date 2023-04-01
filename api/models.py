@@ -25,6 +25,8 @@ class Operation(Base):
     __tablename__ = "operation"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, unique=True, index=True)
+    def __repr__(self) -> str:
+        return f"Operation(id={self.id!r}, title={self.title!r})"
 
 
 class Intervention(Base):

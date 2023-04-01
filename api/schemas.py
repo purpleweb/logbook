@@ -11,6 +11,9 @@ class GarageCreate(BaseModel):
 class GarageModel(GarageCreate):
     id: int
 
+class OperationCreate(BaseModel):
+    title: str
+
 class OperationModel(BaseModel):
     id: int
     title: str
@@ -25,6 +28,14 @@ class InterventionModel(BaseModel):
     description: str | None = None
     garage: GarageModel
     operations: List[OperationModel]
+    class Config:
+        orm_mode = True
 
+class InterventionCreate(BaseModel):
+    date: date
+    km: int
+    cost: float
+    operations: str
+    garage: str
     class Config:
         orm_mode = True
