@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Date, Table
+from sqlalchemy import Column, ForeignKey, Integer, String, Date, Table, Float
 from sqlalchemy.orm import relationship, Mapped
 from typing import List
 
@@ -31,7 +31,9 @@ class Intervention(Base):
     __tablename__ = "intervention"
     id = Column(Integer, primary_key=True, index=True)
     date = Column(Date)
-    description = Column(String, index=True)
+    km = Column(Integer)
+    cost = Column(Float)
+    description = Column(String, index=True, nullable=True)
     garage_id = Column(Integer, ForeignKey("garage.id"), nullable=True)
     garage = relationship("Garage", back_populates="interventions", lazy="joined")
     operations: Mapped[List[Operation]] = relationship(secondary=association_intervention_operation, lazy="joined")

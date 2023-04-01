@@ -20,7 +20,9 @@ class OperationModel(BaseModel):
 class InterventionModel(BaseModel):
     id: int
     date: date
-    description: str
+    km: int
+    cost: float
+    description: str | None = None
     garage: GarageModel
     operations: List[OperationModel]
 

@@ -24,9 +24,9 @@ const fetchLogs = async () => {
     const log: Log = {
       id: obj.id,
       date: obj.date,
-      km: 1234,
+      km: obj.km,
       operations: obj.operations.reduce((res: string, ope: Operation) => res + ', ' + ope.title, ''),
-      cost: 200,
+      cost: obj.cost,
       garage: obj.garage.name
     }
     logs.push(log)

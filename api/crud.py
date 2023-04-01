@@ -28,4 +28,4 @@ def delete_garage(garage_name: str, db: Session):
     return garage
 
 def get_interventions(db: Session):
-    return db.query(Intervention).all()
+    return db.query(Intervention).order_by(Intervention.date.asc()).all()
