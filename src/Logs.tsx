@@ -21,11 +21,15 @@ const fetchLogs = async () => {
 
   const logs: Log[] = []
   for (const obj of myJson) {
+    const operations: string = obj.operations.reduce((res: string, ope: Operation) => {
+        const sep = res ? ', ' : '';
+        return res + sep + ope.title
+      }, "");
     const log: Log = {
       id: obj.id,
       date: obj.date,
       km: obj.km,
-      operations: obj.operations.reduce((res: string, ope: Operation) => res + ', ' + ope.title, ''),
+      operations: operations,
       cost: obj.cost,
       garage: obj.garage.name
     }
