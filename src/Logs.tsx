@@ -5,12 +5,12 @@ type Operation = {
   title: String
 }
 
-type Log = {
+type LogDisplay = {
   id: Number
   date: String
-  km: Number
+  km: String
   operations: String
-  cost: Number
+  cost: String
   garage: String
 }
 
@@ -18,18 +18,21 @@ const fetchLogs = async () => {
   const response = await fetch('http://127.0.0.1:8000/interventions/');
   const myJson = await response.json();
 
-  const logs: Log[] = []
+  const logs: LogDisplay[] = []
   for (const obj of myJson) {
     const operations: string = obj.operations.reduce((res: string, ope: Operation) => {
         const sep = res ? ', ' : '';
         return `${res}${sep}${ope.title}`
       }, "");
-    const log: Log = {
+    const km: string = new Intl.NumberFormat().format(obj.km)
+    const cost: string = new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(obj.cost)
+    const date: string = new Intl.DateTimeFormat("fr-FR").format(new Date(obj.date))
+    const log: LogDisplay = {
       id: obj.id,
-      date: obj.date,
-      km: obj.km,
+      date: date,
+      km: km,
       operations: operations,
-      cost: obj.cost,
+      cost: cost,
       garage: obj.garage.name
     }
     logs.push(log)
@@ -39,7 +42,7 @@ const fetchLogs = async () => {
 }
 
 export function Logs() {
-  const [logs, setLogs] = useState<Log[]>([]);
+  const [logs, setLogs] = useState<LogDisplay[]>([]);
 
   useEffect(() => {
     fetchLogs().then((logs) => {
