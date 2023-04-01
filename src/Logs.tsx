@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 
 type Operation = {
   id: Number
@@ -87,6 +88,9 @@ export function Logs() {
             })}
           </tbody>
         </table>
+        <Link to="/logform">
+          <button className="button">New entry</button>
+        </Link>
       </section>
     </>
   );
