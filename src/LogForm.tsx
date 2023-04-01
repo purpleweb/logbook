@@ -44,7 +44,7 @@ export function LogForm() {
         </div>
         <div className="field">
           <label htmlFor="" className="label">
-            Opérations
+            Opération(s)
           </label>
           <div className="control">
             <input className="input" type="text" placeholder="Vidange" />
