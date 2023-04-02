@@ -51,8 +51,7 @@ export function Logs() {
     });
   }, []);
 
-  const breadcrumbTitle = "Logs";
-  const title = "Booklogs";
+  const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
 
   return (

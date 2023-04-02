@@ -1,5 +1,4 @@
 export function Garages() {
-  const breadcrumbTitle = 'Garages'
   const title = 'Garages'
   const subtitle = 'Manage all your garages'
 

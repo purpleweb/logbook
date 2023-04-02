@@ -5,7 +5,7 @@ export function Layout() {
     <>
       <ul className="vmenu">
         <li><Link to="/" className="nav-link"> Booklog </Link></li>
-        <li><Link to="/all-garages"> Garage </Link></li>
+        <li><Link to="/garages"> Garage </Link></li>
       </ul>
       <div className="container">
         <Outlet />

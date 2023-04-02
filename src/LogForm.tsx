@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useState, forwardRef, FormEvent } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -15,15 +14,13 @@ type Inputs = {
 
 export function LogForm() {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
+  const navigate = useNavigate();
+  const title: string = "New Entry";
+  const subtitle: string = "Your can use this form to add as many entries as you want in your book log.";
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data)
   }
-
-  const navigate = useNavigate();
-  const title: string = "New Entry";
-  const subtitle: string =
-    "Your can use this form to add as many entries as you want in your book log.";
 
   const goBack = () => {
     navigate(-1);
