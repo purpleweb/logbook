@@ -1,9 +1,9 @@
-import { useQuery } from "react-query"
+import { useQuery } from '@tanstack/react-query'
 import { Link } from "react-router-dom"
 import { fetchLogs } from "./api";
 
 export function Logs() {
-  const { isLoading, isError, data, error } = useQuery("logs", fetchLogs);
+  const { isLoading, isError, data, error } = useQuery(["logs"], fetchLogs);
 
   const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
