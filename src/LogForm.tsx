@@ -56,7 +56,7 @@ export function LogForm() {
             </label>
             <div className="control">
               <input
-                {...register("km", { required: "This field is mandatory", pattern: {value: /[0-9]+/, message: "Not a valid number"} })}
+                {...register("km", { required: "Km is required", pattern: {value: /[0-9]+/, message: "Not a valid number"} })}
                 className={errors.km ? "input is-danger" : "input"}
                 type="text"
                 placeholder="125 234"
@@ -70,7 +70,7 @@ export function LogForm() {
             </label>
             <div className="control">
               <input
-                {...register("operations", { required: "Operations are mandatory" })}
+                {...register("operations", { required: "Operations are required" })}
                 className={errors.operations ? "input is-danger" : "input"}
                 type="text"
                 placeholder="Vidange"
