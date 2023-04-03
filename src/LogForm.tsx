@@ -6,14 +6,6 @@ import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { createLog, LogCreate } from "./api";
 import { useState } from "react";
 
-type Inputs = {
-  date: string
-  km: number
-  operations: string
-  cost: number
-  garage: string
-}
-
 export function LogForm() {
   const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>();
   const queryClient = useQueryClient();
@@ -35,7 +27,7 @@ export function LogForm() {
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<LogCreate> = (data) => {
     mutation.mutate(data);
   };
 
