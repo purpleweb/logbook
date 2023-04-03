@@ -12,8 +12,15 @@ type LogDisplay = {
   garage: String
 }
 
+export type LogCreate = {
+  date: string
+  km: number
+  operations: string
+  cost: number
+  garage: string
+}
 
-function sleep(ms: number) {
+function sleep(ms: number): Promise<never> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -45,3 +52,17 @@ export const fetchLogs = async (): Promise<LogDisplay[]> => {
   //throw new Error("500")
   return logs
 }
+
+export const createLog = async (data: LogCreate) => {
+  const response = await fetch("http://127.0.0.1:8000/interventions/", {
+    method: "POST",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(data),
+  });
+  return response.json()
+};
