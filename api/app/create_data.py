@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from database import Base, engine
-from models import Garage, Operation, Intervention
+from .models import Garage, Operation, Intervention
 import datetime
 import os
 import datetime

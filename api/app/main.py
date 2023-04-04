@@ -2,9 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from database import engine, SessionLocal
-from schemas import GarageCreate, GarageModel, InterventionModel, InterventionCreate, OperationCreate
-import crud
+from .database import engine, SessionLocal
+from .schemas import GarageCreate, GarageModel, InterventionModel, InterventionCreate, OperationCreate
+from . import crud
 
 # Dependency
 def get_db():

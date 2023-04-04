@@ -2,8 +2,10 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Date, Table, Float
 from sqlalchemy.orm import relationship, Mapped
 from typing import List
 
-from database import Base
+from sqlalchemy.orm import DeclarativeBase
 
+class Base(DeclarativeBase):
+    pass
 
 class Garage(Base):
     __tablename__ = "garage"

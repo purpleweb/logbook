@@ -1,7 +1,7 @@
 from typing import Any
 from sqlalchemy.orm import Session
-from models import *
-from schemas import *
+from .models import *
+from .schemas import *
 
 def get_garages(db: Session):
     return db.query(Garage).all()
