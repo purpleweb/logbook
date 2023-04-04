@@ -1,10 +1,10 @@
 from fastapi.testclient import TestClient
 from ..main import app, get_db
-from . import db
+from .db import reset_db, override_get_db
 
-db.reset_db()
+reset_db()
 
-app.dependency_overrides[get_db] = db.override_get_db
+app.dependency_overrides[get_db] = override_get_db
 
 client = TestClient(app)
 

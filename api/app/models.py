@@ -30,7 +30,6 @@ class Operation(Base):
     def __repr__(self) -> str:
         return f"Operation(id={self.id!r}, title={self.title!r})"
 
-
 class Intervention(Base):
     __tablename__ = "intervention"
     id = Column(Integer, primary_key=True, index=True)
