@@ -3,12 +3,10 @@ from ..main import app, get_db
 from .db import reset_db, override_get_db
 
 reset_db()
-
 app.dependency_overrides[get_db] = override_get_db
-
 client = TestClient(app)
 
-def test_get_interventions():
+def test_get_garages():
     response = client.get('/garages/')
     assert response.status_code == 200
     assert response.json() == [

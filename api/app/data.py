@@ -16,6 +16,10 @@ def reset():
     session = SessionLocal()
     Base.metadata.create_all(engine)
 
+    create_data(session=session)
+
+
+def create_data(session):
     garage1 = Garage(name="Speedy le Chesnay", phone="01 39 56 56 45")
     garage2 = Garage(name="Speedy Versailles Chantier", phone="01 39 49 06 88")
     garage3 = Garage(name="MCS Automobiles", phone="01 39 50 52 32")
