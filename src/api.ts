@@ -3,7 +3,7 @@ type Operation = {
   title: String
 }
 
-type LogDisplay = {
+export type LogDisplay = {
   id: Number
   date: String
   km: String

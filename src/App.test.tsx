@@ -3,13 +3,14 @@ import {BrowserRouter, MemoryRouter} from 'react-router-dom'
 
 import App from './App';
 
-describe("App", () => {
+describe("Garage", () => {
   it("renders headline", () => {
     render(
       <MemoryRouter initialEntries={['/garages']}>
         <App />
       </MemoryRouter>
     );
-    screen.debug();
+    const headline = screen.getByText(/^Garages$/i)
+    expect(headline).toBeInTheDocument()
   });
 });

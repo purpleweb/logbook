@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query'
 import { Link } from "react-router-dom"
-import { fetchLogs } from "./api";
+import { useLogsQuery } from './apiHooks';
 
 export function Logs() {
-  const { isLoading, isError, data, error } = useQuery(["logs"], fetchLogs);
-
+  const { isLoading, isError, data, error } = useLogsQuery()
   const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
 
