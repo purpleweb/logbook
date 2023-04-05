@@ -1,8 +1,8 @@
-# Booklog 🚘
+# Logbook 🚘
 
 ## Description
 
-Booklog is an app that help users to manage their vehicle history and logs.
+Logbook is an app that help users to manage their vehicle history and logs.
 
 ## Tests
 
