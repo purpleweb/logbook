@@ -13,3 +13,9 @@ cd api/
 source venv/bin/activate
 pytest
 ```
+
+Running tests for the frontend.
+
+```bash
+npm run test
+```
