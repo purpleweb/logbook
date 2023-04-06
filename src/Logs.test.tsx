@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
 import { Logs } from "./Logs";
 import { vi } from 'vitest'
@@ -52,10 +52,10 @@ describe("Logs page", () => {
       </MemoryRouter>
     );
 
-    const garage1 = screen.getByText(/Speedy Versailles Chantier/i)
-    expect(garage1).toBeInTheDocument()
+    const garage1 = screen.getByText(/Speedy Versailles Chantier/i);
+    expect(garage1).toBeInTheDocument();
 
-    const garage2 = screen.getByText(/Speedy le Chesnay/i)
-    expect(garage2).toBeInTheDocument()
+    const garage2 = screen.getByText(/Speedy le Chesnay/i);
+    expect(garage2).toBeInTheDocument();
   });
 });
