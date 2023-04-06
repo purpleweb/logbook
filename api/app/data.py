@@ -9,7 +9,6 @@ DB_FILE = 'app/app.db'
 
 def reset():
     if os.path.isfile(DB_FILE):
-        print("remove db")
         os.remove(DB_FILE)
 
     engine.echo = True

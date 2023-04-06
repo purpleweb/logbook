@@ -20,7 +20,9 @@ def override_get_db():
         db.close()
 
 def reset_db():
-    os.remove('./app/tests/tests.db')
+    DB_FILE = './app/tests/tests.db'
+    if os.path.isfile(DB_FILE):
+        os.remove(DB_FILE)
     Base.metadata.create_all(engine)
     session = TestingSession()
 
