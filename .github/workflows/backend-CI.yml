@@ -24,6 +24,8 @@ jobs:
     - name: Change to api directory
       run: cd api
 
+    - run: pwd
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
