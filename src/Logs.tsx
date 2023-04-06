@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom"
 import { useLogsQuery } from './apiHooks';
+import { deleteLog } from "./api";
+import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 
 export function Logs() {
   const { isLoading, isError, data, error } = useLogsQuery()
   const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: deleteLog,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["logs"] });
+    },
+  });
+
+  const onDelete = (id: Number) => {
+    mutation.mutate(id);
+  }
 
   return (
     <>
@@ -23,6 +37,7 @@ export function Logs() {
               <th>Operations</th>
               <th>Cost</th>
               <th>Garage</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +50,7 @@ export function Logs() {
                     <td>{log.operations}</td>
                     <td>{log.cost.toString()}</td>
                     <td>{log.garage}</td>
+                    <td><button className="button is-small is-danger" onClick={()=>onDelete(log.id)}>✖</button></td>
                   </tr>
                 );
               })}

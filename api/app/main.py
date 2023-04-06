@@ -57,3 +57,10 @@ def read_interventions(db: Session = Depends(get_db)):
 @app.post("/interventions/", status_code=status.HTTP_201_CREATED)
 def create_intervention(intervention: InterventionCreate, db: Session = Depends(get_db)):
     return crud.create_intervention(intervention=intervention, db=db)
+
+@app.delete("/interventions/{intervention_id}", status_code=status.HTTP_200_OK)
+def delete_intervention(intervention_id: int, db: Session = Depends(get_db)):
+    intervention = crud.get_intervention(intervention_id=intervention_id, db=db)
+    if (intervention is None):
+        raise HTTPException(404, f"Intervention not found")
+    return crud.delete_intervention(intervention_id=intervention_id, db=db)

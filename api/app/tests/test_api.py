@@ -31,3 +31,7 @@ def test_get_garages():
             "id": 4
         }
     ]
+
+def test_delete_intervention():
+    response = client.delete('/interventions/1')
+    assert response.status_code == 200

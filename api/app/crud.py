@@ -23,6 +23,12 @@ def create_garage(garage: GarageModel, db: Session) -> Garage:
     db.commit()
     db.refresh(db_garage)
     return db_garage
+    
+def delete_garage(garage_name: str, db: Session):
+    garage = db.query(Garage).filter(Garage.name == garage_name).first()
+    db.delete(garage)
+    db.commit()
+    return garage
 
 def create_operation(operation: OperationModel, db: Session) -> Operation:
     o = Operation(title=operation.title)
@@ -52,12 +58,15 @@ def create_intervention(intervention: InterventionCreate, db: Session) -> Interv
     db.commit()
     db.refresh(model)
     return model
-    
-def delete_garage(garage_name: str, db: Session):
-    garage = db.query(Garage).filter(Garage.name == garage_name).first()
-    db.delete(garage)
-    db.commit()
-    return garage
 
 def get_interventions(db: Session):
     return db.query(Intervention).order_by(Intervention.date.asc()).all()
+
+def delete_intervention(intervention_id: int, db: Session):
+    intervention = db.query(Intervention).filter(Intervention.id == intervention_id).first()
+    db.delete(intervention)
+    db.commit()
+    return intervention
+
+def get_intervention(intervention_id: int, db: Session):
+    return db.query(Intervention).filter(Intervention.id == intervention_id).first()

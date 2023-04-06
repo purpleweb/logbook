@@ -48,9 +48,22 @@ export const fetchLogs = async (): Promise<LogDisplay[]> => {
     logs.push(log)
   }
 
-  await sleep(400)
+  //await sleep(400)
   //throw new Error("500")
   return logs
+}
+
+export const deleteLog = async (id: Number) => {
+  const response = await fetch(`http://127.0.0.1:8000/interventions/${id}`, {
+    method: "DELETE",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  });
+  return response.json()
 }
 
 export const createLog = async (data: LogCreate) => {
