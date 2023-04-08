@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { createLog, LogCreate } from "./api";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export function LogForm() {
   const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>();
@@ -21,6 +22,7 @@ export function LogForm() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["logs"] });
       navigate("/");
+      toast.success("Intervention created", {position: "bottom-center"});
     },
     onError: () => {
       setIsError(true)

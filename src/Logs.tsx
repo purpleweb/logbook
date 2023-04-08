@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useLogsQuery } from './apiHooks';
 import { deleteLog } from "./api";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
+import { toast } from "react-toastify";
 
 export function Logs() {
   const { isLoading, isError, data, error } = useLogsQuery()
@@ -18,6 +19,7 @@ export function Logs() {
 
   const onDelete = (id: Number) => {
     mutation.mutate(id);
+    toast.success("Intervention deleted", { position: "bottom-center" });
   }
 
   return (
