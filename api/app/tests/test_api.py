@@ -8,7 +8,7 @@ from pytest import fixture
 
 @fixture(scope='session')
 def engine():
-    yield create_engine('sqlite:///:memory:', echo=True, connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    yield create_engine('sqlite:///:memory:', echo=False, connect_args={"check_same_thread": False}, poolclass=StaticPool)
 
 @fixture(scope='session')
 def session(engine):
@@ -117,3 +117,40 @@ def test_get_interventions(client):
             ]
         }
     ]
+
+def test_post_intervention_negative_km_error(client):
+    response = client.post('/interventions/', json={
+        "date": "2022-11-16",
+        "km": -122000,
+        "cost": 320.5,
+        "description": "passage au garage",
+        "garage": "Garage de test",
+        "operations": "Révision"
+    })
+    assert response.status_code == 422
+    assert response.json().get('detail')[0].get("msg") == "km must be positive"
+
+def test_post_intervention_negative_cost_error(client):
+    response = client.post('/interventions/', json={
+        "date": "2022-11-16",
+        "km": 122000,
+        "cost": -320.5,
+        "description": "passage au garage",
+        "garage": "Garage de test",
+        "operations": "Révision"
+    })
+    assert response.status_code == 422
+    assert response.json().get('detail')[0].get("msg") == "cost must be positive"
+
+def test_post_intervention_valid(client):
+    response = client.post('/interventions/', json={
+        "date": "2023-04-01",
+        "km": 135000,
+        "cost": 520,
+        "garage": "Garage chez Alfred",
+        "operations": "Révision, bougies"
+    })
+    assert response.status_code == 201
+    response = client.get('/interventions/')
+    assert response.status_code == 200
+    assert any(intervention.get('garage').get('name') == "Garage chez Alfred" for intervention in response.json()), "Created intervention not found"

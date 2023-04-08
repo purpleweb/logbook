@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from datetime import date
 from typing import List
 
@@ -31,11 +31,26 @@ class InterventionModel(BaseModel):
     class Config:
         orm_mode = True
 
+
 class InterventionCreate(BaseModel):
     date: date
     km: int
     cost: float
     operations: str
     garage: str
+    description: str | None = None
+
+    @validator('km')
+    def km_must_be_positive(cls, v):
+        if v < 0:
+            raise ValueError('km must be positive')
+        return v
+
+    @validator('cost')
+    def cost_must_be_positive(cls, v):
+        if v < 0:
+            raise ValueError('cost must be positive')
+        return v
+
     class Config:
         orm_mode = True
