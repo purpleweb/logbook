@@ -30,7 +30,7 @@ Frontend
 - **Package manager:** [npm](https://www.npmjs.com/)
 - **Build tool:** [Vite](https://vitejs.dev/)
 - **CSS preprocessor:** [Sass](https://sass-lang.com/)
-- **CSS Bulma:** [Sass](https://bulma.io/)
+- **CSS framework:** [Bulma](https://bulma.io/)
 - **Unit testing:** [Vitest](https://vitest.netlify.app/), [Testing Library](https://testing-library.com/)
 
 Backend
