@@ -6,30 +6,34 @@ from ..main import app, get_db
 from ..data import create_data
 from pytest import fixture
 
-engine = create_engine('sqlite:///:memory:', echo=True, connect_args={"check_same_thread": False}, poolclass=StaticPool)
-TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base.metadata.create_all(engine)
-session = TestingSession()
+@fixture(scope='session')
+def engine():
+    yield create_engine('sqlite:///:memory:', echo=True, connect_args={"check_same_thread": False}, poolclass=StaticPool)
 
-def override_get_db():
-    try:
-        db = TestingSession()
-        yield db
-    finally:
-        db.close()
+@fixture(scope='session')
+def session(engine):
+    TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    Base.metadata.create_all(engine)
+    yield TestingSession()
 
-app.dependency_overrides[get_db] = override_get_db
-
-client = TestClient(app)
+@fixture(scope='function')
+def client(session):
+    def override_get_db():
+        try:
+            yield session
+        finally:
+            session.close()
+    app.dependency_overrides[get_db] = override_get_db
+    yield TestClient(app)
 
 @fixture(autouse=True)
-def reset():
+def reset(engine, session):
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     create_data(session=session)
 
 
-def test_get_garages():
+def test_get_garages(client):
     response = client.get('/garages/')
     assert response.status_code == 200
     assert response.json() == [
@@ -56,7 +60,7 @@ def test_get_garages():
     ]
 
 
-def test_delete_intervention():
+def test_delete_intervention(client):
     response = client.delete('/interventions/1')
     assert response.status_code == 200
 
@@ -68,7 +72,7 @@ def test_delete_intervention():
     assert response.json()[0].get('id') == 2
 
 
-def test_get_interventions():
+def test_get_interventions(client):
     response = client.get('/interventions/')
     assert response.status_code == 200
     assert response.json() == [
