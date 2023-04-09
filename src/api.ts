@@ -20,12 +20,14 @@ export type LogCreate = {
   garage: string
 }
 
+const API_URL = import.meta.env.VITE_API_URL
+
 function sleep(ms: number): Promise<never> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export const fetchLogs = async (): Promise<LogDisplay[]> => {
-  const response = await fetch('http://127.0.0.1:8000/interventions/');
+  const response = await fetch(`${API_URL}/interventions/`);
   const myJson = await response.json();
 
   const logs: LogDisplay[] = []
@@ -54,7 +56,7 @@ export const fetchLogs = async (): Promise<LogDisplay[]> => {
 }
 
 export const deleteLog = async (id: Number) => {
-  const response = await fetch(`http://127.0.0.1:8000/interventions/${id}`, {
+  const response = await fetch(`${API_URL}/interventions/${id}`, {
     method: "DELETE",
     cache: "no-cache",
     headers: {
@@ -67,7 +69,7 @@ export const deleteLog = async (id: Number) => {
 }
 
 export const createLog = async (data: LogCreate) => {
-  const response = await fetch("http://127.0.0.1:8000/interventions/", {
+  const response = await fetch(`${API_URL}/interventions/`, {
     method: "POST",
     cache: "no-cache",
     headers: {
