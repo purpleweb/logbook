@@ -2,10 +2,10 @@
 FROM python:3.11-slim
 
 # Définir le répertoire de travail
-WORKDIR /app
+WORKDIR /api
 
 # Copier les fichiers de l'application dans le conteneur
-COPY . /app
+COPY . /api
 
 # Installer les dépendances
 RUN pip install --no-cache-dir -r requirements.txt
