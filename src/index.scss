@@ -18,3 +18,17 @@
         }
     }
 }
+
+.just-created {
+    background-color: $white;
+    animation: just-created 3000ms;
+}
+
+@keyframes just-created {
+    from {
+        background-color: $grey-lighter;
+    }
+    to {
+        background-color: $white;
+    }
+}

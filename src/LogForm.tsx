@@ -21,9 +21,9 @@ export function LogForm({title, subtitle, id}: {title: string, subtitle: string,
 
   const mutation = useMutation({
     mutationFn: createLog,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["logs"] });
-      navigate("/");
+      navigate("/", {state: {id: data.id}});
       toast.success("Intervention created", {position: "bottom-center"});
     },
     onError: () => {

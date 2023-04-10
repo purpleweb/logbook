@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { useLogsQuery } from './apiHooks';
 import { deleteLog } from "./api";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
@@ -9,6 +9,12 @@ export function Logs() {
   const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
   const queryClient = useQueryClient();
+
+  const { state } = useLocation();
+  let createdId: number | undefined = undefined;
+  if (state && state.id) {
+    createdId = state.id;
+  }
 
   const mutation = useMutation({
     mutationFn: deleteLog,
@@ -46,7 +52,7 @@ export function Logs() {
             {data &&
               data.map((log) => {
                 return (
-                  <tr key={log.id.toString()}>
+                  <tr key={log.id.toString()} className={createdId == log.id ? "just-created" : ''}>
                     <td>{log.date}</td>
                     <td>{log.km.toString()}</td>
                     <td>{log.operations}</td>
