@@ -1,6 +1,5 @@
 from pydantic import BaseModel, validator
 from datetime import date
-from typing import List
 
 class GarageCreate(BaseModel):
     name: str
@@ -27,7 +26,7 @@ class InterventionModel(BaseModel):
     cost: float
     description: str | None = None
     garage: GarageModel
-    operations: List[OperationModel]
+    operations: list[OperationModel]
     class Config:
         orm_mode = True
 
