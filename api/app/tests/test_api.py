@@ -123,6 +123,11 @@ def test_get_interventions(client: TestClient):
         }
     ]
 
+def test_get_intervention(client: TestClient):
+    response = client.get('/interventions/1')
+    assert response.status_code == 200
+    assert response.json().get('id') == 1
+
 def test_post_intervention_negative_km_error(client: TestClient):
     response = client.post('/interventions/', json={
         "date": "2022-11-16",
