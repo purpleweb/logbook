@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { createLog, fetchLog, LogCreate } from "./api";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 export function LogForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
@@ -36,7 +36,7 @@ export function LogForm({title, subtitle, id}: {title: string, subtitle: string,
     mutation.mutate(data);
   };
 
-  const goBack = (e: MouseEvent) => {
+  const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     navigate(-1);
   };
