@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, StaticPool
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, StaticPool, Engine
+from sqlalchemy.orm import sessionmaker, Session
 from fastapi.testclient import TestClient
 from ..models import Base
 from ..main import app, get_db
@@ -11,13 +11,14 @@ def engine():
     yield create_engine('sqlite:///:memory:', echo=False, connect_args={"check_same_thread": False}, poolclass=StaticPool)
 
 @fixture(scope='session')
-def session(engine):
+def session(engine: Engine):
     TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     Base.metadata.create_all(engine)
+    session = TestingSession()
     yield TestingSession()
 
 @fixture(scope='function')
-def client(session):
+def client(session: Session):
     def override_get_db():
         try:
             yield session
@@ -27,13 +28,13 @@ def client(session):
     yield TestClient(app)
 
 @fixture(autouse=True)
-def reset(engine, session):
+def reset(engine: Engine, session: Session):
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     create_data(session=session)
 
 
-def test_get_garages(client):
+def test_get_garages(client: TestClient):
     response = client.get('/garages/')
     assert response.status_code == 200
     assert response.json() == [
@@ -60,7 +61,7 @@ def test_get_garages(client):
     ]
 
 
-def test_delete_intervention(client):
+def test_delete_intervention(client: TestClient):
     response = client.delete('/interventions/1')
     assert response.status_code == 200
 
@@ -72,7 +73,7 @@ def test_delete_intervention(client):
     assert response.json()[0].get('id') == 2
 
 
-def test_get_interventions(client):
+def test_get_interventions(client: TestClient):
     response = client.get('/interventions/')
     assert response.status_code == 200
     assert response.json() == [
@@ -118,7 +119,7 @@ def test_get_interventions(client):
         }
     ]
 
-def test_post_intervention_negative_km_error(client):
+def test_post_intervention_negative_km_error(client: TestClient):
     response = client.post('/interventions/', json={
         "date": "2022-11-16",
         "km": -122000,
@@ -130,7 +131,7 @@ def test_post_intervention_negative_km_error(client):
     assert response.status_code == 422
     assert response.json().get('detail')[0].get("msg") == "km must be positive"
 
-def test_post_intervention_negative_cost_error(client):
+def test_post_intervention_negative_cost_error(client: TestClient):
     response = client.post('/interventions/', json={
         "date": "2022-11-16",
         "km": 122000,
@@ -142,7 +143,7 @@ def test_post_intervention_negative_cost_error(client):
     assert response.status_code == 422
     assert response.json().get('detail')[0].get("msg") == "cost must be positive"
 
-def test_post_intervention_valid(client):
+def test_post_intervention_valid(client: TestClient):
     response = client.post('/interventions/', json={
         "date": "2023-04-01",
         "km": 135000,
