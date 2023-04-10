@@ -3,19 +3,22 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
-import { createLog, LogCreate } from "./api";
+import { createLog, fetchLog, LogCreate } from "./api";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export function LogForm() {
-  const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>();
+export function LogForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
+
+  const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>(
+    id ?
+      {defaultValues: async () => fetchLog(id)}
+      :
+      {}
+  )
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false)
-
-  const title: string = "New Entry";
-  const subtitle: string =
-    "Your can use this form to add as many entries as you want in your book log.";
 
   const mutation = useMutation({
     mutationFn: createLog,

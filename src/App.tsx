@@ -1,9 +1,9 @@
 import { Layout } from './Layout';
 import { Logs } from './Logs';
 import { Garages } from './Garages';
-import { LogForm } from './LogForm';
-
 import { Routes, Route } from 'react-router-dom';
+import { LogCreate } from './LogCreate';
+import { LogUpdate } from './LogUpdate';
 
 function App() {
   return (
@@ -11,7 +11,8 @@ function App() {
       <Route path="/" element={<Layout/>}>
         <Route index element={<Logs />} />
         <Route path="/garages" element={<Garages />} />
-        <Route path="/logform" element={<LogForm />} />
+        <Route path="/log-create" element={<LogCreate />} />
+        <Route path="/log-update/:id" element={<LogUpdate />} />
       </Route>
     </Routes>
   )

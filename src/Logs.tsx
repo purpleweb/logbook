@@ -52,7 +52,12 @@ export function Logs() {
                     <td>{log.operations}</td>
                     <td>{log.cost.toString()}</td>
                     <td>{log.garage}</td>
-                    <td><button className="button is-small is-danger" onClick={()=>onDelete(log.id)}>✖</button></td>
+                    <td>
+                      <button className="button is-small is-danger" onClick={() => onDelete(log.id)} > delete </button>
+                      <Link to={`/log-update/${log.id}`}>
+                        <button className="button is-small is-warning"> update </button>
+                      </Link>
+                    </td>
                   </tr>
                 );
               })}
@@ -70,7 +75,7 @@ export function Logs() {
       </section>
 
       <section>
-        <Link to="/logform">
+        <Link to="/log-create">
           <button className="button">New entry</button>
         </Link>
       </section>
