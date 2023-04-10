@@ -8,7 +8,6 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 export function LogForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
-
   const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>(
     id ?
       {defaultValues: async () => fetchLog(id)}
