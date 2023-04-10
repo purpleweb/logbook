@@ -36,7 +36,8 @@ export function LogForm({title, subtitle, id}: {title: string, subtitle: string,
     mutation.mutate(data);
   };
 
-  const goBack = () => {
+  const goBack = (e: MouseEvent) => {
+    e.preventDefault()
     navigate(-1);
   };
 
