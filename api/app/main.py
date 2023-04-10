@@ -48,7 +48,7 @@ def delete_garage(garage_name: str, db: Session = Depends(get_db)):
     garage = crud.get_garage_by_name(name=garage_name, db=db)
     if (garage is None):
         raise HTTPException(404, f"Garage not found")
-    return crud.delete_garage(garage_name=garage_name, db=db)
+    crud.delete_garage(garage_name=garage_name, db=db)
 
 @app.get("/interventions/", response_model=list[InterventionModel])
 def read_interventions(db: Session = Depends(get_db)):
@@ -63,4 +63,4 @@ def delete_intervention(intervention_id: int, db: Session = Depends(get_db)):
     intervention = crud.get_intervention(intervention_id=intervention_id, db=db)
     if (intervention is None):
         raise HTTPException(404, f"Intervention not found")
-    return crud.delete_intervention(intervention_id=intervention_id, db=db)
+    crud.delete_intervention(intervention_id=intervention_id, db=db)

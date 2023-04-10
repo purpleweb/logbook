@@ -18,7 +18,7 @@ def reset():
     create_data(session=session)
 
 
-def create_data(session):
+def create_data(session: Session):
     garage1 = Garage(name="Speedy le Chesnay", phone="01 39 56 56 45")
     garage2 = Garage(name="Speedy Versailles Chantier", phone="01 39 49 06 88")
     garage3 = Garage(name="MCS Automobiles", phone="01 39 50 52 32")

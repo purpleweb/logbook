@@ -14,7 +14,6 @@ def engine():
 def session(engine: Engine):
     TestingSession = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     Base.metadata.create_all(engine)
-    session = TestingSession()
     yield TestingSession()
 
 @fixture(scope='function')
@@ -59,6 +58,11 @@ def test_get_garages(client: TestClient):
             "id": 4
         }
     ]
+
+def test_get_garage(client: TestClient):
+    response = client.get('/garages/1')
+    assert response.status_code == 200
+    assert response.json().get('id') == 1
 
 
 def test_delete_intervention(client: TestClient):
