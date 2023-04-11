@@ -128,6 +128,10 @@ def test_get_intervention(client: TestClient):
     assert response.status_code == 200
     assert response.json().get('id') == 1
 
+def test_get_intervention_not_found(client: TestClient):
+    response = client.get('/interventions/111')
+    assert response.status_code == 404
+
 def test_post_intervention_negative_km_error(client: TestClient):
     response = client.post('/interventions/', json={
         "date": "2022-11-16",
@@ -164,3 +168,32 @@ def test_post_intervention_valid(client: TestClient):
     response = client.get('/interventions/')
     assert response.status_code == 200
     assert any(intervention.get('garage').get('name') == "Garage chez Alfred" for intervention in response.json()), "Created intervention not found"
+
+def test_update_intervention(client: TestClient):
+    response = client.post('/interventions/', json={
+        "id": 1,
+        "date": "2023-04-01",
+        "km": 135000,
+        "cost": 520,
+        "garage": "Garage chez Alfred",
+        "operations": "Révision, bougies"
+    })
+    response = client.get('/interventions/1')
+    assert response.status_code == 200
+    assert response.json().get('id') == 1
+    assert response.json().get('date') == "2023-04-01"
+    assert response.json().get('km') == 135000
+    assert response.json().get('cost') == 520
+    assert response.json().get('garage').get("name") == "Garage chez Alfred"
+
+
+def test_update_intervention(client: TestClient):
+    response = client.post('/interventions/', json={
+        "id": 111, # id does not exist
+        "date": "2023-04-01",
+        "km": 135000,
+        "cost": 520,
+        "garage": "Garage chez Alfred",
+        "operations": "Révision, bougies"
+    })
+    assert response.status_code == 404

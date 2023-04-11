@@ -1,5 +1,7 @@
 from pydantic import BaseModel, validator
 from datetime import date
+from typing import Optional
+
 
 class GarageCreate(BaseModel):
     name: str
@@ -31,7 +33,8 @@ class InterventionModel(BaseModel):
         orm_mode = True
 
 
-class InterventionCreate(BaseModel):
+class InterventionUpsert(BaseModel):
+    id: Optional[int] = None
     date: date
     km: int
     cost: float

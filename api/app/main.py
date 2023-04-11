@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from .database import engine, SessionLocal
-from .schemas import GarageCreate, GarageModel, InterventionModel, InterventionCreate, OperationCreate
+from .schemas import GarageCreate, GarageModel, InterventionModel, InterventionUpsert, OperationCreate
 from . import crud
 
 # Dependency
@@ -62,8 +62,11 @@ def read_interventions(db: Session = Depends(get_db)):
     return intervention
 
 @app.post("/interventions/", status_code=status.HTTP_201_CREATED)
-def create_intervention(intervention: InterventionCreate, db: Session = Depends(get_db)):
-    return crud.create_intervention(intervention=intervention, db=db)
+def upsert_intervention(intervention: InterventionUpsert, db: Session = Depends(get_db)):
+    try:
+        return crud.upsert_intervention(intervention=intervention, db=db)
+    except crud.NotFoundError:
+        raise HTTPException(404, f"Intervention not found")
 
 @app.delete("/interventions/{intervention_id}", status_code=status.HTTP_200_OK)
 def delete_intervention(intervention_id: int, db: Session = Depends(get_db)):

@@ -3,6 +3,9 @@ from sqlalchemy.orm import Session
 from .models import *
 from .schemas import *
 
+class NotFoundError(Exception):
+    ...
+
 def get_garages(db: Session) -> list[Garage]:
     return db.query(Garage).all()
 
@@ -36,7 +39,7 @@ def create_operation(operation: OperationModel, db: Session) -> Operation:
     db.refresh(o)
     return o
     
-def create_intervention(intervention: InterventionCreate, db: Session) -> Intervention:
+def upsert_intervention(intervention: InterventionUpsert, db: Session) -> Intervention:
     garage = get_garage_by_name(name=intervention.garage, db=db)
     if (garage is None):
         garage = create_garage(GarageCreate(name=intervention.garage), db=db)
@@ -47,7 +50,12 @@ def create_intervention(intervention: InterventionCreate, db: Session) -> Interv
         if (ope is None):
             ope = create_operation(operation=OperationCreate(title=operation.strip()), db=db)
         opeList.append(ope)
-    model = Intervention()
+    if (intervention.id is not None):
+        model = get_intervention(intervention_id=intervention.id, db=db)
+        if(model is None):
+            raise NotFoundError
+    else:
+        model = Intervention()
     model.date = intervention.date
     model.km = intervention.km
     model.cost = intervention.cost
