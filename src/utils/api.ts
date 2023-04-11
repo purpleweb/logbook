@@ -59,7 +59,7 @@ export class Intervention implements IIntervention {
     operations: string;
     cost: number;
     garage: string;
-    id: number | undefined;
+    id?: number | undefined;
   }) {
     this.date = date;
     this.km = km;
@@ -154,7 +154,7 @@ export const deleteIntervention = async (id: Number) => {
   return response.json();
 };
 
-export const upsertIntervention = async (intervention: Intervention) => {
+export const upsertIntervention = async (intervention: Intervention): Promise<{id: number}> =>  {
   const response = await fetch(`${API_URL}/interventions/`, {
     method: "POST",
     cache: "no-cache",

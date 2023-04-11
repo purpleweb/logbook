@@ -7,7 +7,11 @@ import { upsertIntervention, fetchIntervention, Intervention, LogCreate } from "
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-export function InterventionForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
+export type handleInterventionSave = (intervention: Intervention) => Promise<{id: number}>;
+
+export function InterventionForm ({title, subtitle, id, handleInterventionSave}:
+  {title: string, subtitle: string, id?: number, handleInterventionSave?: handleInterventionSave}) {
+
   const { register, handleSubmit, watch, formState: { errors }, } = useForm<Intervention>(
     id ?
       {defaultValues: async () => fetchIntervention(id)}
@@ -20,9 +24,9 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
   const [isError, setIsError] = useState(false)
 
   const mutation = useMutation({
-    mutationFn: upsertIntervention,
+    mutationFn: handleInterventionSave ? handleInterventionSave : upsertIntervention,
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["logs"] });
+      queryClient.invalidateQueries({ queryKey: ["interventions"] });
       navigate("/", {state: {id: data.id}});
       toast.success("Intervention created", {position: "bottom-center"});
     },
@@ -32,7 +36,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
   });
 
   const onSubmit: SubmitHandler<Intervention> = (data) => {
-    mutation.mutate(data);
+    mutation.mutate(new Intervention(data));
   };
 
   const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -66,6 +70,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
                 className={errors.date ? "input is-danger" : "input"}
                 type="text"
                 placeholder="2020-12-31"
+                data-testid="input-date"
               />
             </div>
             <p className="help is-danger">{errors.date?.message}</p>
@@ -83,6 +88,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
                 className={errors.km ? "input is-danger" : "input"}
                 type="text"
                 placeholder="125 234"
+                data-testid="input-km"
               />
             </div>
             <p className="help is-danger">{errors.km?.message}</p>
@@ -99,6 +105,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
                 className={errors.operations ? "input is-danger" : "input"}
                 type="text"
                 placeholder="Vidange"
+                data-testid="input-operations"
               />
             </div>
             <p className="help is-danger">{errors.operations?.message}</p>
@@ -113,6 +120,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
                 className={errors.cost ? "input is-danger" : "input"}
                 type="text"
                 placeholder="150"
+                data-testid="input-cost"
               />
             </div>
             <p className="help is-danger">{errors.cost?.message}</p>
@@ -127,12 +135,13 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
                 className="input"
                 type="text"
                 placeholder="Garage de la mairie"
+                data-testid="input-garage"
               />
             </div>
           </div>
           <div className="field is-grouped">
             <div className="control">
-              <button className="button is-link">Submit</button>
+              <button className="button is-link" data-testid="submit">Submit</button>
             </div>
             <div className="control">
               <button className="button is-link is-light" onClick={goBack}>
