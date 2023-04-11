@@ -1,38 +1,45 @@
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
-import { InterventionList } from "../pages/InterventionList";
 import { vi } from 'vitest'
-import { LogDisplay } from "../utils/api";
+import { Intervention, IIntervention } from "../utils/api";
 
 vi.mock("../utils/apiHooks", () => {
-  const logsList: LogDisplay[] = [
-    {
+  
+  let interventionList: IIntervention[] = []
+
+  interventionList.push(
+    new Intervention({
       id: 2,
-      date: "10/01/2021",
-      km: "110 000",
+      date: "2021-01-10",
+      km: 110000,
       operations: "Révision",
-      cost: "500,00",
+      cost: 500,
       garage: "Speedy Versailles Chantier",
-    },
-    {
+    })
+  );
+  interventionList.push(
+    new Intervention({
       id: 1,
-      date: "16/11/2022",
-      km: "122 000",
+      date: "2022-11-16",
+      km: 122000,
       operations: "Vidange, Plaquettes AV",
-      cost: "320,50",
+      cost: 320.50,
       garage: "Speedy le Chesnay",
-    },
-  ];
-  const useLogsQuery = () => ({
+    })
+  );
+
+  const useInterventionListQuery = () => ({
     status: "success",
     isLoading: false,
     isError: false,
-    data: logsList,
+    data: interventionList,
     error: undefined,
   });
-  return { useLogsQuery: useLogsQuery };
+  return { useInterventionListQuery: useInterventionListQuery };
 });
+
+import { InterventionList } from "../pages/InterventionList";
 
 const queryClient = new QueryClient({
   defaultOptions: {

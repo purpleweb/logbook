@@ -1,11 +1,11 @@
 import { Link, useLocation } from "react-router-dom"
-import { useLogsQuery } from '../utils/apiHooks';
+import { useInterventionListQuery } from '../utils/apiHooks';
 import { deleteLog } from "../utils/api";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { toast } from "react-toastify";
 
 export function InterventionList() {
-  const { isLoading, isError, data, error } = useLogsQuery()
+  const { isLoading, isError, data, error } = useInterventionListQuery()
   const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
   const queryClient = useQueryClient();
@@ -19,7 +19,7 @@ export function InterventionList() {
   const mutation = useMutation({
     mutationFn: deleteLog,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["logs"] });
+      queryClient.invalidateQueries({ queryKey: ["interventions"] });
     },
   });
 
@@ -50,17 +50,18 @@ export function InterventionList() {
           </thead>
           <tbody>
             {data &&
-              data.map((log) => {
+              data.map((intervention) => {
+                if (!intervention.hasId()) { return "" }
                 return (
-                  <tr key={log.id.toString()} className={createdId == log.id ? "just-created" : ''}>
-                    <td>{log.date}</td>
-                    <td>{log.km.toString()}</td>
-                    <td>{log.operations}</td>
-                    <td>{log.cost.toString()}</td>
-                    <td>{log.garage}</td>
+                  <tr key={intervention.getId().toString()} className={createdId == intervention.getId() ? "just-created" : ''}>
+                    <td>{intervention.getFormatedDate()}</td>
+                    <td>{intervention.getFormatedKm()}</td>
+                    <td>{intervention.getFormatedOperations()}</td>
+                    <td>{intervention.getFormatedCost()}</td>
+                    <td>{intervention.getFormatedGarage()}</td>
                     <td>
-                      <button className="button is-small is-danger" onClick={() => onDelete(log.id)} > delete </button>
-                      <Link to={`/intervention/${log.id}/edit`}>
+                      <button className="button is-small is-danger" onClick={() => onDelete(intervention.getId())} > delete </button>
+                      <Link to={`/intervention/${intervention.id}/edit`}>
                         <button className="button is-small is-warning"> update </button>
                       </Link>
                     </td>

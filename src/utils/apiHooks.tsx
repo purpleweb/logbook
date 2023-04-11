@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query'
-import { fetchLogs } from "./api";
+import { fetchIntervention } from "./api";
 
-export function useLogsQuery() {
-  return useQuery(["logs"], fetchLogs);
+export function useInterventionListQuery() {
+  return useQuery(["interventions"], fetchIntervention);
 }
