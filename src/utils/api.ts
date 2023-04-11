@@ -1,4 +1,4 @@
-import { LogCreate } from "./LogCreate"
+import { InterventionNew } from "../pages/InterventionNew"
 
 type Operation = {
   id: Number

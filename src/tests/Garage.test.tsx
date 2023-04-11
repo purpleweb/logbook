@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import {BrowserRouter, MemoryRouter} from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom'
 
-import App from '../App';
+import App from '../components/App';
 
 describe("Garage", () => {
   it("renders headline", () => {

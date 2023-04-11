@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom"
-import { useLogsQuery } from './apiHooks';
-import { deleteLog } from "./api";
+import { useLogsQuery } from '../utils/apiHooks';
+import { deleteLog } from "../utils/api";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { toast } from "react-toastify";
 
-export function Logs() {
+export function InterventionList() {
   const { isLoading, isError, data, error } = useLogsQuery()
   const title = "Booklog";
   const subtitle = "Manage logs and history of your vehicle";
@@ -60,7 +60,7 @@ export function Logs() {
                     <td>{log.garage}</td>
                     <td>
                       <button className="button is-small is-danger" onClick={() => onDelete(log.id)} > delete </button>
-                      <Link to={`/log-update/${log.id}`}>
+                      <Link to={`/intervention/${log.id}/edit`}>
                         <button className="button is-small is-warning"> update </button>
                       </Link>
                     </td>
@@ -81,7 +81,7 @@ export function Logs() {
       </section>
 
       <section>
-        <Link to="/log-create">
+        <Link to="/intervention/new">
           <button className="button">New entry</button>
         </Link>
       </section>

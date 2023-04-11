@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
-import { Logs } from "../Logs";
+import { InterventionList } from "../pages/InterventionList";
 import { vi } from 'vitest'
-import { LogDisplay } from "../api";
+import { LogDisplay } from "../utils/api";
 
-vi.mock("../apiHooks", () => {
+vi.mock("../utils/apiHooks", () => {
   const logsList: LogDisplay[] = [
     {
       id: 2,
@@ -47,7 +47,7 @@ describe("Logs page", () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <QueryClientProvider client={queryClient}>
-          <Logs />
+          <InterventionList />
         </QueryClientProvider>
       </MemoryRouter>
     );

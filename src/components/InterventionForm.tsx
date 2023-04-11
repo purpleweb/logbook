@@ -3,11 +3,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
-import { createLog, fetchLog, LogCreate } from "./api";
+import { createLog, fetchLog, LogCreate } from "../utils/api";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-export function LogForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
+export function InterventionForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
   const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>(
     id ?
       {defaultValues: async () => fetchLog(id)}
