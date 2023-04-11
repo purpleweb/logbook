@@ -75,4 +75,7 @@ def delete_intervention(intervention_id: int, db: Session) -> None:
     db.commit()
 
 def get_intervention(intervention_id: int, db: Session) -> Intervention:
-    return db.query(Intervention).filter(Intervention.id == intervention_id).first()
+    intervention = db.query(Intervention).filter(Intervention.id == intervention_id).first()
+    if (intervention is None):
+        raise NotFoundError
+    return intervention
