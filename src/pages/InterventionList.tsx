@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 import { useInterventionListQuery } from '../utils/apiHooks';
-import { deleteLog } from "../utils/api";
+import { deleteIntervention } from "../utils/api";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
 import { toast } from "react-toastify";
 
@@ -17,7 +17,7 @@ export function InterventionList() {
   }
 
   const mutation = useMutation({
-    mutationFn: deleteLog,
+    mutationFn: deleteIntervention,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["interventions"] });
     },

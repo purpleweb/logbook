@@ -104,26 +104,6 @@ function sleep(ms: number): Promise<never> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
-const createLogCreate = (obj: any): LogCreate => {
-    const operations: string = obj.operations.reduce((res: string, ope: Operation) => {
-        const sep = res ? ', ' : '';
-        return `${res}${sep}${ope.title}`
-      }, "");
-    const km: number = parseInt(obj.km)
-    const cost: number = parseInt(obj.cost)
-    const date: string = (new Date(obj.date)).toISOString().split('T')[0]
-    const log: LogCreate = {
-      date: date,
-      km: km,
-      operations: operations,
-      cost: cost,
-      garage: obj.garage.name
-    }
-
-    return log
-}
-
 const createIntervention = (obj: any): IIntervention => {
   const operations: string = obj.operations.reduce(
     (res: string, ope: Operation) => {
@@ -142,7 +122,7 @@ const createIntervention = (obj: any): IIntervention => {
   });
 };
 
-export const fetchIntervention = async (): Promise<IIntervention[]> => {
+export const fetchInterventionList = async (): Promise<IIntervention[]> => {
   const response = await fetch(`${API_URL}/interventions/`);
   const myJson = await response.json();
 
@@ -154,14 +134,14 @@ export const fetchIntervention = async (): Promise<IIntervention[]> => {
   return interventionList;
 };
 
-export const fetchLog = async (id: Number): Promise<LogCreate> => {
+export const fetchIntervention = async (id: Number): Promise<IIntervention> => {
   const response = await fetch(`${API_URL}/interventions/${id}`);
   const myJson = await response.json();
 
-  return createLogCreate(myJson);
+  return createIntervention(myJson);
 };
 
-export const deleteLog = async (id: Number) => {
+export const deleteIntervention = async (id: Number) => {
   const response = await fetch(`${API_URL}/interventions/${id}`, {
     method: "DELETE",
     cache: "no-cache",
@@ -174,7 +154,7 @@ export const deleteLog = async (id: Number) => {
   return response.json();
 };
 
-export const createLog = async (data: LogCreate) => {
+export const upsertIntervention = async (intervention: Intervention) => {
   const response = await fetch(`${API_URL}/interventions/`, {
     method: "POST",
     cache: "no-cache",
@@ -183,7 +163,7 @@ export const createLog = async (data: LogCreate) => {
     },
     redirect: "follow",
     referrerPolicy: "no-referrer",
-    body: JSON.stringify(data),
+    body: JSON.stringify(intervention),
   });
   return response.json();
 };

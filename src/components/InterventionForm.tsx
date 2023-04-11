@@ -3,14 +3,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, QueryClient, useQueryClient } from '@tanstack/react-query'
-import { createLog, fetchLog, LogCreate } from "../utils/api";
+import { upsertIntervention, fetchIntervention, Intervention, LogCreate } from "../utils/api";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
 export function InterventionForm({title, subtitle, id}: {title: string, subtitle: string, id?: number}) {
-  const { register, handleSubmit, watch, formState: { errors }, } = useForm<LogCreate>(
+  const { register, handleSubmit, watch, formState: { errors }, } = useForm<Intervention>(
     id ?
-      {defaultValues: async () => fetchLog(id)}
+      {defaultValues: async () => fetchIntervention(id)}
       :
       {}
   )
@@ -20,7 +20,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
   const [isError, setIsError] = useState(false)
 
   const mutation = useMutation({
-    mutationFn: createLog,
+    mutationFn: upsertIntervention,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["logs"] });
       navigate("/", {state: {id: data.id}});
@@ -31,7 +31,7 @@ export function InterventionForm({title, subtitle, id}: {title: string, subtitle
     },
   });
 
-  const onSubmit: SubmitHandler<LogCreate> = (data) => {
+  const onSubmit: SubmitHandler<Intervention> = (data) => {
     mutation.mutate(data);
   };
 
