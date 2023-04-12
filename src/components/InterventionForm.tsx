@@ -28,7 +28,8 @@ export function InterventionForm ({title, subtitle, id, handleInterventionSave}:
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["interventions"] });
       navigate("/", {state: {id: data.id}});
-      toast.success("Intervention created", {position: "bottom-center"});
+      const message = id ? "Intervention updated" : "Intervention created";
+      toast.success(message, {position: "bottom-center"});
     },
     onError: () => {
       setIsError(true)
@@ -36,6 +37,7 @@ export function InterventionForm ({title, subtitle, id, handleInterventionSave}:
   });
 
   const onSubmit: SubmitHandler<Intervention> = (data) => {
+    if (id) data.id = id;
     mutation.mutate(new Intervention(data));
   };
 

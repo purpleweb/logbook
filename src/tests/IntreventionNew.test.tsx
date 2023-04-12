@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { InterventionNew } from "../pages/InterventionNew";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { vi, expect } from "vitest";
-import { upsertIntervention, Intervention } from "../utils/api";
+import { Intervention } from "../utils/api";
 
 
 const queryClient = new QueryClient({
@@ -31,7 +31,7 @@ describe("Intervention New page", () => {
     const spy = vi.spyOn(spyObj, 'call')
 
     render(
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={["/intervention/new"]}>
         <QueryClientProvider client={queryClient}>
           <InterventionNew handleInterventionSave={spyObj.call} />
         </QueryClientProvider>
