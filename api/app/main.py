@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from .database import engine, SessionLocal
 from .schemas import GarageCreate, GarageModel, InterventionModel, InterventionUpsert, OperationCreate
 from . import crud
+from .data import init
 
 # Dependency
 def get_db():
@@ -26,7 +27,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-engine.echo = True
+engine.echo = False
+
+@app.on_event("startup")
+def onstartup():
+    init()
 
 @app.get("/garages/", response_model=list[GarageModel])
 def read_garages(db: Session = Depends(get_db)):

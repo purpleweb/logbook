@@ -7,11 +7,21 @@ import datetime
 
 DB_FILE = 'app/app.db'
 
+def init():
+    connection = engine.connect()
+    if not engine.dialect.has_table(connection=connection, table_name=Intervention.__tablename__):
+        print("Init database")
+        Base.metadata.drop_all(engine)
+        Base.metadata.create_all(engine)
+        session = SessionLocal()
+        create_data(session=session)
+    connection.close()
+
 def reset():
     if os.path.isfile(DB_FILE):
         os.remove(DB_FILE)
 
-    engine.echo = True
+    engine.echo = False
     session = SessionLocal()
     Base.metadata.create_all(engine)
 
