@@ -1,25 +1,6 @@
-import { InterventionNew } from "../pages/InterventionNew"
-
 type Operation = {
   id: Number
   title: String
-}
-
-export type LogDisplay = {
-  id: number
-  date: string
-  km: string
-  operations: string
-  cost: string
-  garage: string
-}
-
-export type LogCreate = {
-  date: string
-  km: number
-  operations: string
-  cost: number
-  garage: string
 }
 
 export interface IIntervention {
