@@ -10,11 +10,8 @@ export function InterventionList() {
   const subtitle = "Manage logs and history of your vehicle";
   const queryClient = useQueryClient();
 
-  const { state } = useLocation();
-  let createdId: number | undefined = undefined;
-  if (state && state.id) {
-    createdId = state.id;
-  }
+  const { state }: {state: { id: number} } | undefined = useLocation();
+  const createdId = (state && state.id) ? state.id : undefined;
 
   const mutation = useMutation({
     mutationFn: deleteIntervention,
@@ -23,7 +20,7 @@ export function InterventionList() {
     },
   });
 
-  const onDelete = (id: Number) => {
+  const onDelete = (id: Number): void => {
     mutation.mutate(id);
     toast.success("Intervention deleted", { position: "bottom-center" });
   }
