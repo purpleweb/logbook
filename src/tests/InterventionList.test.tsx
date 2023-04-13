@@ -12,7 +12,7 @@ vi.mock("../utils/apiHooks", () => {
     new Intervention({
       id: 2,
       date: "2021-01-10",
-      km: 110000,
+      km: 110_000,
       operations: "Révision",
       cost: 500,
       garage: "Speedy Versailles Chantier",
@@ -22,7 +22,7 @@ vi.mock("../utils/apiHooks", () => {
     new Intervention({
       id: 1,
       date: "2022-11-16",
-      km: 122000,
+      km: 122_000,
       operations: "Vidange, Plaquettes AV",
       cost: 320.50,
       garage: "Speedy le Chesnay",

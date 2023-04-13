@@ -1,10 +1,10 @@
 type Operation = {
-  id: Number
+  readonly id: Number
   title: String
 }
 
 export interface IIntervention {
-  id?: number
+  readonly id?: number
   date: string
   km: number
   operations: string
@@ -20,7 +20,7 @@ export interface IIntervention {
 }
 
 export class Intervention implements IIntervention {
-  id?: number | undefined;
+  readonly id?: number | undefined;
   date: string;
   km: number;
   operations: string;
@@ -135,7 +135,7 @@ export const deleteIntervention = async (id: Number) => {
   return response.json();
 };
 
-export const upsertIntervention = async (intervention: Intervention): Promise<{id: number}> =>  {
+export const upsertIntervention = async (intervention: IIntervention): Promise<{id: number}> =>  {
   const response = await fetch(`${API_URL}/interventions/`, {
     method: "POST",
     cache: "no-cache",

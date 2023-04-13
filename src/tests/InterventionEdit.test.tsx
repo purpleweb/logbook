@@ -27,7 +27,7 @@ describe("Intervention Edit page", () => {
       JSON.stringify({
         id: 4,
         date: "2021-01-06",
-        km: 120000,
+        km: 120_000,
         cost: 520.5,
         description: null,
         garage: { name: "Garage de l'Eglise", phone: null, id: 11 },
@@ -54,7 +54,7 @@ describe("Intervention Edit page", () => {
 
     const NEW_DATE = "2023-03-11";
     fireEvent.change(screen.getByTestId("input-date"), { target: { value: NEW_DATE }, });
-    const NEW_KM = 121000
+    const NEW_KM = 121_000
     fireEvent.change(screen.getByTestId("input-km"), { target: { value: NEW_KM }, });
     const NEW_COST = 519
     fireEvent.change(screen.getByTestId("input-cost"), { target: { value: NEW_COST }, });
@@ -66,7 +66,7 @@ describe("Intervention Edit page", () => {
     fetchMocker.mockResponseOnce(
       JSON.stringify({
         date: "2023-03-10",
-        km: 120000,
+        km: 120_000,
         description: null,
         id: 4,
         cost: 155.0,
@@ -85,7 +85,7 @@ describe("Intervention Edit page", () => {
         {
           id: 4,
           date: "2020-12-31",
-          km: 125200,
+          km: 125_200,
           cost: 199.0,
           description: null,
           garage: { name: "Garage de la mairie", phone: null, id: 5 },
@@ -97,7 +97,7 @@ describe("Intervention Edit page", () => {
         {
           id: 32,
           date: "2021-01-06",
-          km: 120000,
+          km: 120_000,
           cost: 520.5,
           description: null,
           garage: { name: "Garage de l'Eglise", phone: null, id: 11 },
