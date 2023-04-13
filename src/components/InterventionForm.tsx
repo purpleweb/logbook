@@ -35,8 +35,10 @@ export function InterventionForm ({title, subtitle, id, handleInterventionSave}:
   });
 
   const onSubmit: SubmitHandler<Intervention> = (data) => {
-    if (id) data.id = id;
-    mutation.mutate(new Intervention(data));
+    mutation.mutate(new Intervention({
+      ...data,
+      id: id
+    }));
   };
 
   const goBack = (e: React.MouseEvent<HTMLButtonElement>) => {
