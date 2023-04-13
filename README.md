@@ -2,9 +2,20 @@
 
 ## Description
 
-Logbook is an app that help users to manage their vehicle history and logs.
+Logbook is a self-project made with react and FastAPI python backend.
+This app helps users to manage their vehicle history and logs.
 
-## Tests
+## Installation
+
+If you want to intall and try this app on your machine you just need to clone the project in a repository and lunch it with docker compose.
+
+```bash
+git clone git@github.com:purpleweb/logbook.git logbook
+cd logbook
+docker compose up
+```
+
+## Run tests
 
 Running tests for the backend.
 
@@ -26,9 +37,11 @@ Frontend
 
 - **Programming language:** [TypeScript](https://www.typescriptlang.org/)
 - **Front-end library:** [React](https://reactjs.org/)
-- **Routing:** [React Router](https://reactrouter.com/)
 - **Package manager:** [npm](https://www.npmjs.com/)
 - **Build tool:** [Vite](https://vitejs.dev/)
+- **Routing:** [React Router](https://reactrouter.com/)
+- **Query manager:** [TanStack Query](https://tanstack.com/query/v3/)
+- **Form manager:** [React Hook Form](https://react-hook-form.com/)
 - **CSS preprocessor:** [Sass](https://sass-lang.com/)
 - **CSS framework:** [Bulma](https://bulma.io/)
 - **Unit testing:** [Vitest](https://vitest.netlify.app/), [Testing Library](https://testing-library.com/)
