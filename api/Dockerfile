@@ -1,6 +1,10 @@
 # Utiliser l'image de base Python officielle
 FROM python:3.10-slim
 
+# Installation de vim
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "vim"]
+
 # Définir le répertoire de travail
 WORKDIR /api
 
