@@ -187,7 +187,7 @@ def test_update_intervention(client: TestClient):
     assert response.json().get('garage').get("name") == "Garage chez Alfred"
 
 
-def test_update_intervention(client: TestClient):
+def test_update_intervention_not_found(client: TestClient):
     response = client.post('/interventions/', json={
         "id": 111, # id does not exist
         "date": "2023-04-01",
