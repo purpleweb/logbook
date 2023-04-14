@@ -1,5 +1,9 @@
 # Logbook 🚘
 
+<p align="center">
+    <img src="screenshot.png?raw=true" alt="Logbook App" title="Logbook App" />
+</p>
+
 ## Description
 
 Logbook is a self-project made with react and FastAPI python backend.
