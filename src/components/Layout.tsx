@@ -9,9 +9,11 @@ export function Layout() {
         <li><NavLink to="/" className="nav-link"> Booklog </NavLink></li>
         <li><NavLink to="/garages"> Garage </NavLink></li>
       </ul>
-      <div className="container">
-        <Outlet />
-      </div>
+      <main>
+        <div className="container">
+          <Outlet />
+        </div>
+      </main>
       <ToastContainer />
     </>
   )
