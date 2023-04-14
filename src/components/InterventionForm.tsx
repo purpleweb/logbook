@@ -118,7 +118,10 @@ export function InterventionForm ({title, subtitle, id, handleInterventionSave}:
             </label>
             <div className="control">
               <input
-                {...register("cost", { required: "Cost is required" })}
+                {...register("cost", {
+                  required: "Cost is required",
+                  pattern: { value: /[0-9]+/, message: "Not a valid number" },
+                })}
                 className={errors.cost ? "input is-danger" : "input"}
                 type="text"
                 placeholder="150"
