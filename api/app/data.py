@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from .database import engine, SessionLocal
 from .models import Base, Garage, Operation, Intervention
 import datetime
 import os
@@ -8,24 +7,21 @@ import datetime
 DB_FILE = 'app/app.db'
 
 def init():
+    from .database import engine
     connection = engine.connect()
     if not engine.dialect.has_table(connection=connection, table_name=Intervention.__tablename__):
-        print("Init database")
-        Base.metadata.drop_all(engine)
-        Base.metadata.create_all(engine)
-        session = SessionLocal()
-        create_data(session=session)
+        reset()
     connection.close()
 
 def reset():
-    if os.path.isfile(DB_FILE):
-        os.remove(DB_FILE)
-
-    engine.echo = False
-    session = SessionLocal()
+    from .database import engine, SessionLocal
+    engine.echo = True
+    print("Init database")
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-
+    session = SessionLocal()
     create_data(session=session)
+    engine.echo = False
 
 
 def create_data(session: Session):

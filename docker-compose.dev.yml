@@ -4,6 +4,8 @@ version: '3.8'
 services:
   api:
     build: ./api
+    depends_on:
+      - db
     ports:
       - 8000:8000
     volumes:
@@ -11,6 +13,13 @@ services:
       - exclude:/api/venv
       - exclude:/api/.pytest_cache
     working_dir: /api
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass123root
+      - MYSQL_DATABASE=logbook
+      - MYSQL_USER=lb
+      - MYSQL_PASSWORD=pass123lb
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
   web:
@@ -23,5 +32,19 @@ services:
       - .:/app
       - exclude:/app/node_modules/
 
+  db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass123root
+      - MYSQL_DATABASE=logbook
+      - MYSQL_USER=lb
+      - MYSQL_PASSWORD=pass123lb
+
 volumes:
   exclude:
+  db_data:

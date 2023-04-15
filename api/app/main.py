@@ -1,14 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-
-from .database import engine, SessionLocal
 from .schemas import GarageCreate, GarageModel, InterventionModel, InterventionUpsert, OperationCreate
 from . import crud
-from .data import init
 
 # Dependency
 def get_db():
+    from .database import SessionLocal
     db = SessionLocal()
     try:
         yield db
@@ -27,10 +25,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-engine.echo = False
-
 @app.on_event("startup")
 def onstartup():
+    from .data import init
     init()
 
 @app.get("/garages/", response_model=list[GarageModel])

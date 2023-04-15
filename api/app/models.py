@@ -8,8 +8,8 @@ class Base(DeclarativeBase):
 class Garage(Base):
     __tablename__ = "garage"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True)
-    phone = Column(String, nullable=True)
+    name = Column(String(60), unique=True, index=True)
+    phone = Column(String(16), nullable=True)
     interventions = relationship("Intervention", back_populates="garage")
     def __repr__(self) -> str:
         return f"Garage(id={self.id!r}, name={self.name!r}, phone={self.phone!r})"
@@ -24,7 +24,7 @@ association_intervention_operation = Table(
 class Operation(Base):
     __tablename__ = "operation"
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, unique=True, index=True)
+    title = Column(String(60), unique=True, index=True)
     def __repr__(self) -> str:
         return f"Operation(id={self.id!r}, title={self.title!r})"
 
@@ -34,7 +34,7 @@ class Intervention(Base):
     date = Column(Date)
     km = Column(Integer)
     cost = Column(Float)
-    description = Column(String, index=True, nullable=True)
+    description = Column(String(200), index=True, nullable=True)
     garage_id = Column(Integer, ForeignKey("garage.id"), nullable=True)
     garage = relationship("Garage", back_populates="interventions", lazy="joined")
     operations: Mapped[list[Operation]] = relationship(secondary=association_intervention_operation, lazy="joined")
