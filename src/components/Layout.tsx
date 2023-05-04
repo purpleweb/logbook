@@ -5,15 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 export function Layout() {
   return (
     <>
-      <ul className="vmenu">
-        <li><NavLink to="/" className="nav-link"> Booklog </NavLink></li>
-        <li><NavLink to="/garages"> Garage </NavLink></li>
-      </ul>
-      <main>
-        <div className="container">
-          <Outlet />
+      <div className="global">
+        <div className="vmenu">
+          <NavLink to="/" className="nav-link"> Booklog </NavLink>
+          <NavLink to="/garages"> Garage </NavLink>
         </div>
-      </main>
+        <main>
+           <Outlet />
+        </main>
+      </div>
       <ToastContainer />
     </>
   )

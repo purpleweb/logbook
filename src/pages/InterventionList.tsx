@@ -57,10 +57,12 @@ export function InterventionList() {
                     <td>{intervention.getFormatedCost()}</td>
                     <td>{intervention.getFormatedGarage()}</td>
                     <td>
-                      <button className="button is-small is-danger" onClick={() => onDelete(intervention.getId())} > delete </button>
-                      <Link to={`/intervention/${intervention.id}/edit`}>
-                        <button className="button is-small is-warning"> update </button>
-                      </Link>
+                      <div className="actions">
+                        <button className="button is-small is-danger" onClick={() => onDelete(intervention.getId())} > delete </button>
+                        <Link to={`/intervention/${intervention.id}/edit`}>
+                          <button className="button is-small is-warning"> update </button>
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 );
