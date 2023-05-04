@@ -19,6 +19,12 @@ cd logbook
 docker compose up
 ```
 
+Serve the app during development.
+
+```bash
+docker compose -f docker-compose.dev.yml up
+```
+
 ## Run tests
 
 Running tests for the backend.
